@@ -5,6 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>week2-assignment#1</title>
 </head>
+
+<style>
+    .div_navtop{
+        color: white;
+        background-color: green;
+        border-radius: 5px;
+        padding: 5px 10px;
+    }
+    .div_navtop h2{
+        margin: 0px;
+    }
+
+    .div_maincontent{
+        display: flex;
+    }
+
+    ul{
+        list-style:none;
+        padding: 0px;
+    }
+
+    .div_leftcontent ul li{
+        width: 200px;
+        border: 1px solid grey;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: lightgray;
+        margin-bottom: 5px;
+    }
+
+    .div_leftcontent ul li.active{
+        background-color: green;
+        color:white;
+    }
+
+    .div_centercontent{
+        padding: 5px;
+    }
+    .div_rightcontent{
+        width : 20vw;
+        margin: 10px 0px 10px 10px;
+        padding: 5px;
+        border-radius: 5px;;
+        color:white;
+        background-color: skyblue;
+    }
+
+    .div_rightcontent h4{
+        margin: 0px;
+    }
+
+    .div_footer{
+        border: 1px solid grey;
+        border-radius: 5px;
+        background-color: lightgray;
+        padding:5px 10px;
+    }
+</style>
+
 <body>
     <!-- nav top 공간 -->
     <div class="div_navtop">
@@ -17,7 +76,7 @@
     <div class="div_maincontent">
         <div class="div_leftcontent">
             <ul>
-                <li>Stylesheet 1</li>
+                <li class="active">Stylesheet 1</li>
                 <li>Stylesheet 2</li>
                 <li>Stylesheet 3</li>
                 <li>Stylesheet 4</li>
@@ -43,7 +102,6 @@
                 <a href="./nostyle.html">No Stylesheet</a>.
             </div>
         </div>
-
 
         <div class="div_rightcontent">   
             <h4>Side-Bar</h4>
