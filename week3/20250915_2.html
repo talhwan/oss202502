@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>week3-class2</title>
+</head>
+<body>
+
+    <h2>HTML Forms</h2>
+    <div>사용자 정보 입력</div>
+
+    <!-- 폼 태그 실습 -->
+    <form method="GET" action="form_ok.html"> 
+        <!-- 
+        method는 데이터를 전송할때 방식 GET, POST, PUT, DELETE 등등..
+        action은 데이터를 전송할 url을 표기!
+        -->
+        <label for="input_name">이름 : </label> <br/>
+        <input type="text" id="input_name" name="name" placeholder="내용을 적어주세요!"/> <br/>
+        <!-- 
+        label은 인풋 태그 이름을 표기하는 공간
+        placeholder를 적어주면, 아무것도 입력하지 않았을때 인풋 내에 표기가 된다.
+        input의 name 어트리뷰트는 폼으로 전송할때 key값으로 작용합니다!
+        -->
+
+        <label for="input_email">이메일 : </label> <br/>
+        <input type="text" id="input_email" name="email" /> <br/>
+
+        <fieldset>
+            <legend>필드셋의 라벨 같은 기능!</legend>
+            <label for="input_phone">전화번호 :</label> <input type="text" id="input_phone" name="phone" /> <br/>
+            <label for="input_address">주소 :</label> <input type="text" id="input_address" name="address" /> <br/>
+        </fieldset>
+
+        <!-- 인풋 태그 타입의 여러가지 종류!! -->
+        <div>
+            <label for="input_type_text">TYPE : text</label>
+            <input type="text" name="input_text" id="input_type_text" />
+        </div>
+        <div>
+            <label for="input_type_passowrd">TYPE : password</label>
+            <input type="password" name="input_password" id="input_type_password" />
+        </div>
+        <div>
+            <label for="input_type_number">TYPE : number</label>
+            <input type="number" name="input_number" id="input_type_number" />
+        </div>
+        <div>
+            <label for="input_type_date">TYPE : date</label>
+            <input type="date" name="input_date" id="input_type_date" />
+        </div>
+        <div>
+            <label for="input_type_time">TYPE : time</label>
+            <input type="time" name="input_time" id="input_type_time" />
+        </div>
+        <div>
+            <label for="input_type_hidden">TYPE : hidden</label>
+            <input type="hidden" name="input_hidden" id="input_type_hidden" />
+            <input type="text" name="input_hidden1" id="input_type_hidden1" style="display: none;" />
+        </div>
+
+        <div>
+            <label for="input_type_radio_1">TYPE : radio 1</label>
+            <input type="radio" name="input_radio" id="input_type_radio_1" />
+        </div>
+        <div>
+            <label for="input_type_radio_2">TYPE : radio 2</label>
+            <input type="radio" name="input_radio" id="input_type_radio_2" />
+        </div>
+        <div>
+            <label for="input_type_radio_3">TYPE : radio 3</label>
+            <input type="radio" name="input_radio" id="input_type_radio_3" />
+        </div>
+
+
+        <div>
+            <label for="input_type_checkbox_1">TYPE : checkbox 1</label>
+            <input type="checkbox" name="input_checkbox1" id="input_type_checkbox_1" />
+        </div>
+        <div>
+            <label for="input_type_checkbox_2">TYPE : checkbox 2</label>
+            <input type="checkbox" name="input_checkbox2" id="input_type_checkbox_2" />
+        </div>
+
+        <div>
+            <label for="input_type_file">TYPE : file</label>
+            <input type="file" name="input_file" id="input_type_file" />
+        </div>
+
+        <input type="submit" value="제출"/>
+        <input type="reset" value="취소"/>
+    </form>
+    
+</body>
+</html>
