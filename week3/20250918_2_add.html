@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>week3-class2</title>
+</head>
+<body>
+<h2>덧셈 계산기 입니다.</h2>
+<form>
+    <input type="number" id="input_num1" /> + <input type="number" id="input_num2"/>
+    <button onclick="listener_add()" type="button">=</button> 
+    <input type="number" id="input_sum" />
+    <input type="reset" value="초기화"/>
+</form>
+
+<div id="div_test"
+onclick="listener_onclick()"
+onmouseover="console.log('mouse over!!')"
+onmouseout="console.log('mouse out...!!')"
+style="height: 200px; background-color: aquamarine;">안녕하세요!</div>
+
+<input type="text" onchange="console.log('change?')" onkeydown="console.log('kd!')" onkeyup="console.log('ku')"/>
+<script>
+    function listener_onclick(){
+        alert("you clicked!");
+        let div_test = document.getElementById("div_test");
+        div_test.style = "background-color : yellow";
+        div_test.innerHTML = '<img src="https://media.istockphoto.com/id/1317323736/ko/%EC%82%AC%EC%A7%84/%EB%82%98%EB%AC%B4-%EB%B0%A9%ED%96%A5%EC%9C%BC%EB%A1%9C-%ED%95%98%EB%8A%98%EB%A1%9C-%EB%B0%94%EB%9D%BC%EB%B3%B4%EB%8A%94-%EA%B2%BD%EC%B9%98.jpg?s=612x612&w=0&k=20&c=0xTghmMTXJ5ITCZ-LKTABbaPIK_1kWNf0FSFl_GL_7I="/>';
+    }
+</script>
+
+
+<script>
+    function listener_add(){
+        let num1 = document.getElementById("input_num1");
+        let num2 = document.getElementById("input_num2");
+
+        let sum = Number(num1.value) + Number(num2.value);
+
+        let input_sum = document.getElementById("input_sum");
+        input_sum.value = sum;
+        //alert(sum);
+    }
+
+    let type1 = "abc";
+    alert("type1 : " + type1);
+    alert(`type1 : ${type1}`);
+</script>
+    
+</body>
+</html>
