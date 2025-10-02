@@ -38,6 +38,7 @@
     }
 </style>
 <body>
+    result : <input id="input_result" readonly/>
     id : <input id="input_id" readonly style="background-color: brown;"/>
     stdnum : <input id="input_stdnum" /> <button onclick="listener_register()">IN</button>
     <button onclick="listener_stop()">STOP</button>
@@ -181,6 +182,8 @@
             });
     }
     function getList(){
+        let each_o = 0;
+        let each_x = 0;
         $.ajax({
                 url: 'https://68dde6f4d7b591b4b78dd546.mockapi.io/player',
                 method: 'GET',
@@ -190,6 +193,12 @@
                     for(let each of data){
                         let each_level = each.level;
                         if(each_level === 0 + ""){
+                            if(each.panel === "o"){
+                                each_o++;
+                            }
+                            if(each.panel === "x"){
+                                each_x++;
+                            }
                             let div_player_each = $(".div_player_" + each.id);
                             if(div_player_each.length > 0){
                                 listener_player_move(each.id, each.panel);
@@ -198,6 +207,15 @@
                             }
                         }
                     }
+                    let result = null;
+                    if(each_o > each_x){
+                        result = "o";
+                    } else if(each_o < each_x){
+                        result = "x";
+                    } else {
+                        result = "-";
+                    }
+                    $("#input_result").val(result);
                 },
                 error: function (data, status, err) {
                 },
