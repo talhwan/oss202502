@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- jquery js import -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    
+</head>
+<body>
+    <style>
+       .div_obj{
+            position: fixed;
+            top: 50px;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+       }
+       .div_btn{
+            left : 50px;
+            background-color: aqua;
+       }
+       .div_goal{
+            left : 450px;
+            background-color: yellow;
+       }
+    </style>
+
+    id : <input id="input_id" />
+    stdnum : <input id="input_stdnum" />
+    <button onclick="listener_register()">register</button>
+    <script>
+        function listener_register(){
+            $.ajax({
+                url: 'https://68ddd05ad7b591b4b78d897b.mockapi.io/user',
+                method: 'POST',
+                data : {
+                    stdnum : $("#input_stdnum").val()
+                },
+                success: function (data, status, xhr) {
+                    alert(data.id);
+                    $("#input_id").val(data.id);
+                    console.log("data : : " + JSON.stringify(data));
+                },
+                error: function (data, status, err) {
+                },
+                complete: function () {
+                    
+                }
+            });
+        }
+    </script>
+
+    <input type="hidden" id="input_score" value="0"/>
+
+    <div id="div_btn" class="div_obj div_btn">OBJ</div>
+    <div class="div_obj div_goal">GOAL</div>
+
+    <div style="padding-top:200px;">
+        SCORE : 
+        <div id="div_score"></div>
+    </div>
+    
+    <script>
+        let trial_time = null;
+        let move_function = null;
+        let starttime = null;
+        let finishtime = null;
+            
+        let div_btn = document.getElementById("div_btn");
+        div_btn.addEventListener("mousedown", function(){
+            starttime = Date.now();
+            console.log(starttime);
+        });
+        div_btn.addEventListener("mouseup", function(){
+            finishtime = Date.now();
+
+            trial_time = finishtime;
+            let gap_time = finishtime - starttime;
+            console.log(starttime + "~" + finishtime + ":" + gap_time);
+
+            
+
+            if(trial_time != null){
+            $("#input_score").val(gap_time);
+            move_function = setInterval(listener_move, 50);
+
+            $.ajax({
+                url: 'https://68ddd05ad7b591b4b78d897b.mockapi.io/user/' + $("#input_id").val(),
+                method: 'PUT',
+                data : {
+                    id : $("#input_id").val()
+                    ,score : gap_time
+                },
+                success: function (data, status, xhr) {
+                    alert("수정성공!");
+                    console.log("data : : " + JSON.stringify(data));
+                },
+                error: function (data, status, err) {
+                },
+                complete: function () {
+                    
+                }
+            });
+            }
+        });
+
+
+let target_move = 0;
+let temp_move = 0;
+function listener_move(){
+    target_move = Number($("#input_score").val());
+    temp_move += (target_move / 100);
+    console.log(temp_move + "/" + target_move);
+    if(temp_move >= target_move){
+        clearInterval(move_function);
+
+        $.ajax({
+                url: 'https://68ddd05ad7b591b4b78d897b.mockapi.io/user',
+                method: 'GET',
+                data : {},
+                success: function (data, status, xhr) {
+                    console.log("data : : " + JSON.stringify(data));
+                    for(let each of data){
+                        $("#div_score").append(
+                            `<div>${each.stdnum} : ${each.score}</div>`
+                        );
+                    }
+                },
+                error: function (data, status, err) {
+                },
+                complete: function () {
+                    
+                }
+            });
+
+    }
+    $("#div_btn").css("left", 50 + temp_move);
+}
+    </script>
+
+
+
+</body>
+</html>
