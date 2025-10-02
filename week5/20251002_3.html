@@ -62,8 +62,9 @@
         let tempInterval = null;
         function listener_go(){
             if(tempInterval === null){
-                tempInterval = setInterval(getList, 1000);
+                //tempInterval = setInterval(getList, 1000);
             }
+            getList();
         }
         function listener_stop(){
             clearInterval(tempInterval);
