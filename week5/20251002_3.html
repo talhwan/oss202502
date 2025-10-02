@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- jquery js import -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    
+</head>
+<style>
+    .div_panel{
+        height: 600px;
+        font-size: 500px;
+        text-align: center;
+    }
+    .div_panel.div_panel_o{
+        background-color: aquamarine;
+    }
+    .div_panel.div_panel_x{
+        background-color: palevioletred;
+    }
+
+    .div_player{
+        background-color: yellow;
+        text-align: center;
+        position: fixed;
+        font-size: 15px;
+        border-radius: 50%;
+        padding-top: 5px;
+        width: 50px;
+        height: 50px;
+        left : calc(50% - 25px);
+        top : 50px;
+    }
+    .hide{
+        display: none;
+    }
+</style>
+<body>
+    id : <input id="input_id" readonly style="background-color: brown;"/>
+    stdnum : <input id="input_stdnum" /> <button onclick="listener_register()">IN</button>
+    <button onclick="listener_stop()">STOP</button>
+    <button onclick="listener_go()">GO</button>
+    <button onclick="listener_out()">OUT</button>
+    <div id="div_player_zone"></div>
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 50%;">
+                <div class="div_panel div_panel_o" onclick="listener_panel_clicked('o')">
+                    O
+                </div>
+            </td>
+            <td style="width: 50%;">
+                <div class="div_panel div_panel_x" onclick="listener_panel_clicked('x')">
+                    X
+                </div>
+            </td>
+        </tr>
+    </table> 
+    <script>
+        let tempInterval = null;
+        function listener_go(){
+            if(tempInterval === null){
+                tempInterval = setInterval(getList, 1000);
+            }
+        }
+        function listener_stop(){
+            clearInterval(tempInterval);
+            tempInterval = null;
+        }
+
+        function listener_out(){
+            if(registered){
+                $.ajax({
+                url: 'https://68dde6f4d7b591b4b78dd546.mockapi.io/player/' + $("#input_id").val(),
+                method: 'PUT',
+                data : {
+                    level : 500
+                },
+                success: function (data, status, xhr) {
+                    //alert(obj_way);
+                    let input_id = $("#input_id").val();
+                    $("#div_player_" + input_id).remove();
+                },
+                error: function (data, status, err) {
+                },
+                complete: function () {
+                    
+                }
+            });
+
+                
+            }
+        }
+
+        $(function(){
+            getList();
+        });
+        let registered = false;
+        function listener_player_add(obj_id, obj_target){
+            $("#div_player_zone").append(
+                `<div class="div_player div_player_${obj_id} hide" id="div_player_${obj_id}" target="${obj_target}">player<br/>#<span id="span_player_stdnum_${obj_id}">${obj_id}</div></div>`
+            );
+            $("#div_player_" + obj_id).removeClass("hide");
+            listener_player_move(obj_id, obj_target);
+        }
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        function listener_player_move(obj_id, obj_target){
+            let temp_left = 0;
+            let temp_top = 0;
+            if(obj_target === "o"){
+                temp_left = 12.5;
+                temp_left += getRandomInt(25);
+            } else if(obj_target === "x"){
+                temp_left = 62.5;
+                temp_left += getRandomInt(25);
+            } else {
+                temp_left = 50;
+            }
+            temp_top = 100;
+            temp_top += getRandomInt(400);
+            $("#div_player_" + obj_id).css("left", "calc("+temp_left+"% - 25px)");
+            $("#div_player_" + obj_id).css("top", temp_top + "px");
+            $("#div_player_" + obj_id).attr("target", obj_target);
+        }
+        function listener_panel_clicked(obj_target){
+            if(registered){
+                $.ajax({
+                url: 'https://68dde6f4d7b591b4b78dd546.mockapi.io/player/' + $("#input_id").val(),
+                method: 'PUT',
+                data : {
+                    panel : obj_target
+                },
+                success: function (data, status, xhr) {
+                    //alert(obj_way);
+                    let input_id = $("#input_id").val();
+                    listener_player_move(input_id, obj_target);
+                },
+                error: function (data, status, err) {
+                },
+                complete: function () {
+                    
+                }
+            });
+
+                
+            }
+        }
+
+
+    function listener_register(){
+        let input_stdnum = $("#input_stdnum").val();
+        if(input_stdnum === ""){
+            alert("입력해주세요!");
+            $("#input_stdnum").focus();
+            return false;
+        }
+        $.ajax({
+                url: 'https://68dde6f4d7b591b4b78dd546.mockapi.io/player',
+                method: 'POST',
+                data : {
+                    stdnum : $("#input_stdnum").val()
+                    , panel : ''
+                    , level : 0
+                },
+                success: function (data, status, xhr) {
+                    $("#input_id").val(data.id);
+                    let input_id = $("#input_id").val();
+                    listener_player_add(input_id);
+                    registered = true;
+                },
+                error: function (data, status, err) {
+                },
+                complete: function () {
+                    
+                }
+            });
+    }
+    function getList(){
+        $.ajax({
+                url: 'https://68dde6f4d7b591b4b78dd546.mockapi.io/player',
+                method: 'GET',
+                data : {},
+                success: function (data, status, xhr) {
+                    console.log("data : " + JSON.stringify(data));
+                    for(let each of data){
+                        let each_level = each.level;
+                        if(each_level === 0 + ""){
+                            let div_player_each = $(".div_player_" + each.id);
+                            if(div_player_each.length > 0){
+                                listener_player_move(each.id, each.panel);
+                            } else {
+                                listener_player_add(each.id, each.panel);
+                            }
+                        }
+                    }
+                },
+                error: function (data, status, err) {
+                },
+                complete: function () {
+                    
+                }
+            });
+    }
+</script>
+
+
+
+</body>
+</html>
