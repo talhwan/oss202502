@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    let fruits = ["apple", "mango", "banana"];
+    //alert(fruits[0]);
+
+    let fruits2 = [];
+    fruits2[0] = "orange";
+    fruits2[1] = "melon";
+    fruits2[2] = "pear";
+    /*
+    alert(fruits2[0]); // orange
+    alert(fruits2[1]); // undefined
+    alert(fruits2[2]); // pear? (O) error? undefined?
+
+    for(let i=0;i<fruits2.length;i++){
+        console.log(fruits2[i]);
+    }
+    for(let each of fruits2){
+        console.log(each);
+    }
+    */
+
+    //fruits2.push("lemon");
+    fruits2[fruits2.length] = "lemon";
+    customPush(fruits2, "kiwi");
+    fruits2.forEach(function(each){
+        console.log(each);
+    });
+
+    // push라는 메서드를 쓰지 않고, 동일한 기능을 구현해보세요.
+    //함수로 만드시거나, 직접 구현하셔도 됩니다.
+    function customPush(prm_array, prm_value){
+        prm_array[prm_array.length] = prm_value;
+    }
+
+    const fruits3 = ["Bananas", "Oranges", "Apples", "Mangos"];
+    // Destructuring
+    let [fruit1, fruit2] = fruits3;
+    //alert(fruit1 + "//" + fruit2);
+
+    const person = {
+        firstName: "John",
+        lastName: "Doe",
+        age: 50
+    };
+    /*
+    // Destructuring
+    let {lastName, firstName} = person;
+    // Default value
+    let {firstName, lastName, country = "US"} = person;
+    // Property alias
+    let {lastName : name} = person;
+
+    let {lastName : name} = person;
+    //alert(name);
+    let name2 = person["lastName"];
+
+    let string_person = JSON.stringify(person);
+
+    console.log(person);
+    console.log(string_person);
+    let clonePerson = JSON.parse(string_person);
+    console.log(clonePerson);
+    */
+    //exeTest();
+    /*function exeTest(){
+        alert(11);
+    }
+    let extTest = function(){
+      alert(11);
+    };
+    */
+
+    let exeTest = () =>{
+        alert(11);
+    }
+    //exeTest();
+
+    //window.open("https://daum.net");
+
+    console.log("href : " + location.href);
+    console.log("hostname : " + location.hostname);
+    console.log("protocol : " + location.protocol);
+    console.log("pathname : " + location.pathname);
+
+
+    //
+</script>
+</body>
+</html>
